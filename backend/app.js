@@ -4,6 +4,7 @@ const cors = require('cors');
 
 const blogRouter = require('./routes/blogRouter');
 const authRouter = require('./routes/authRouter');
+const userRouter = require("./routes/userRouter")
 
 const app = express();
 
@@ -18,5 +19,6 @@ if (process.env.NODE_ENV === 'development') {
 // routes middlewares
 app.use('/api', blogRouter);
 app.use('/api', authRouter);
+app.use("/api",userRouter)
 
 module.exports = app;

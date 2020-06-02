@@ -3,7 +3,7 @@ const crypto = require('crypto');
 
 const userSchema = new mongoose.Schema(
   {
-    userName: {
+    username: {
       type: String,
       required: true,
       trim: true,
@@ -39,7 +39,7 @@ const userSchema = new mongoose.Schema(
     },
     role: {
       type: Number,
-      trim: true,
+      default: 0,
     },
     photo: {
       data: Buffer,
