@@ -4,7 +4,9 @@ const cors = require('cors');
 
 const blogRouter = require('./routes/blogRouter');
 const authRouter = require('./routes/authRouter');
-const userRouter = require("./routes/userRouter")
+const userRouter = require('./routes/userRouter');
+const categoryRouter = require('./routes/categoryRouter');
+const tagRouter = require('./routes/tagRouter');
 
 const app = express();
 
@@ -18,7 +20,10 @@ if (process.env.NODE_ENV === 'development') {
 
 // routes middlewares
 app.use('/api', blogRouter);
+
 app.use('/api', authRouter);
-app.use("/api",userRouter)
+app.use('/api', userRouter);
+app.use('/api', categoryRouter);
+app.use('/api', tagRouter);
 
 module.exports = app;

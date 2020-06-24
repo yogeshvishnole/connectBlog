@@ -1,0 +1,60 @@
+const slugify = require('slugify');
+
+const Tag = require('../models/tagModel');
+const { errorHandler } = require('../helpers/dbErrorHandler');
+
+exports.create = (req, res) => {
+  const { name } = req.body;
+  let slug = slugify(name).toLowerCase();
+
+  let tag = new Tag({ name, slug });
+
+  tag.save((err, data) => {
+    if (err) {
+      console.log(err);
+      return res.status(400).json({
+        error: errorHandler(err),
+      });
+    }
+    res.json(data); // dont do this res.json({ tag: data });
+  });
+};
+
+exports.getTags = (req, res) => {
+  Tag.find({}).exec((err, data) => {
+    if (err) {
+      return res.status(400).json({
+        error: errorHandler(err),
+      });
+    }
+    res.json(data);
+  });
+};
+
+exports.getTag = (req, res) => {
+  const slug = req.params.slug.toLowerCase();
+
+  Tag.findOne({ slug }).exec((err, tag) => {
+    if (err) {
+      return res.status(400).json({
+        error: 'Tag not found',
+      });
+    }
+    res.json(tag);
+  });
+};
+
+exports.deleteTag = (req, res) => {
+  const slug = req.params.slug.toLowerCase();
+
+  Tag.findOneAndRemove({ slug }).exec((err, data) => {
+    if (err) {
+      return res.status(400).json({
+        error: errorHandler(err),
+      });
+    }
+    res.json({
+      message: 'Tag deleted successfully',
+    });
+  });
+};
